@@ -38,7 +38,7 @@
 
 - hosts: master
   vars:
-   kube_version: 1.15.4-00
+    kube_version: 1.15.4-00
   become: yes
   tasks:
    - name: install kubectl

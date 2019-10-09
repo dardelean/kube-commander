@@ -1,6 +1,9 @@
 - hosts: all
   become: yes
   tasks:
+    - name: Disable SWAP since kubernetes can't work with swap enabled (1/2)
+      shell: swapoff -a
+
     - name: create the 'ubuntu' user
       user: name=ubuntu append=yes state=present createhome=yes shell=/bin/bash
 
