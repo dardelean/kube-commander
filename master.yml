@@ -1,10 +1,10 @@
 - hosts: master
   vars:
-    api_advertise_address: 192.168.1.10
+    api_advertise_address: 192.168.121.10
   become: yes
   tasks:
     - name: initialize the cluster
-      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address={{ api_advertise_address }} >> cluster_initialized.txt
+      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
       args:
         chdir: $HOME
         creates: cluster_initialized.txt
