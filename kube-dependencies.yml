@@ -1,4 +1,6 @@
 - hosts: all
+  vars:
+    kube_version: 1.15.4-00
   become: yes
   tasks:
    - name: install Docker
@@ -25,13 +27,13 @@
 
    - name: install kubelet
      apt:
-       name: kubelet=1.14.0-00
+       name: kubelet={{ kube_version }}
        state: present
        update_cache: true
 
    - name: install kubeadm
      apt:
-       name: kubeadm=1.14.0-00
+       name: kubeadm={{ kube_version }}
        state: present
 
 - hosts: master
@@ -39,6 +41,6 @@
   tasks:
    - name: install kubectl
      apt:
-       name: kubectl=1.14.0-00
+       name: kubectl={{ kube_version }}
        state: present
        force: yes
