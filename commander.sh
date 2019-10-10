@@ -12,6 +12,9 @@ kubectl create -n kube-system serviceaccount admin
 kubectl create clusterrolebinding permissive-binding \
 	--clusterrole=cluster-admin --user=admin --user=kubelet --group=system:serviceaccounts
 
+### useful commands
 #kubectl -n kube-system get cm kubeadm-config -oyaml
 #kubectl describe pod kube-apiserver -n kube-system
 #kubectl get apiservices
+#kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes"
+#kubectl run --rm utils -it --generator=run-pod/v1 --image arunvelsriram/utils bash
