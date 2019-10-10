@@ -37,8 +37,14 @@ sudo chmod 777 /mnt/kubeshare/
 sudo exportfs -a
 sudo systemctl restart nfs-kernel-server
 helm install --name nfs-client-provisioner --namespace kube-system --set nfs.server=192.168.121.10 --set nfs.path=/mnt/kubeshare stable/nfs-client-provisioner
+kubectl patch storageclass nfs-client -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
-helm install stable/prometheus --name prometheus --namespace kube-system
+### install prometheus and grafana and weave
+helm install stable/prometheus --name prometheus --namespace kube-system --set server.service.type=NodePort --set server.service.nodePort=30333 --set nodeExporter.enabled=true 
+helm install stable/grafana --name grafana --namespace kube-system --set service.type=NodePort
+kubectl get secret --namespace kube-system grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo 
+#http://prometheus-server:80
+helm install stable/weave-scope --name weave-scope --namespace kube-system --set weave-scope-frontend.enabled=true  --set service.type=NodePort
 
 
 ### useful commands
